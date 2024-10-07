@@ -45,3 +45,19 @@ function addAction(PDO $connexion, array $data) {
     header('Location: ' . BASE_PUBLIC_URL . 'posts');
 
 }
+
+function updateAction(PDO $connexion, int $id, array $data) {
+    include_once '../app/models/postsModel.php';
+    $response = \App\Models\PostsModel\updateOneById($connexion, $id, $data);
+    header('Location: ' . BASE_PUBLIC_URL . 'posts');
+}
+
+function editFormAction(PDO $connexion, int $id){
+    include_once '../app/models/postsModel.php'; 
+    $post = \App\Models\PostsModel\findOneById($connexion, $id); 
+    global $content, $title;
+    $title = "Alex Parker - Edit Post"; 
+    ob_start();
+    include '../app/views/posts/editForm.php'; 
+    $content = ob_get_clean();
+}
