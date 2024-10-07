@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Controllers\PagesController;
+namespace App\Controllers\PostsController;
 use \PDO;
 
-function homeAction(PDO $connexion)
+function indexAction(PDO $connexion)
 {
 
     include_once '../app/models/postModel.php';
@@ -13,6 +13,18 @@ function homeAction(PDO $connexion)
     global $content, $title;
     $title = "Alex Parker - Blog";
     ob_start();
-    include "../app/views/pages/home.php";
+    include "../app/views/posts/index.php";
+    $content = ob_get_clean();
+}
+
+function showAction(PDO $connexion, int $id)
+{
+    include_once '../app/models/postModel.php';
+    $post = \App\Models\PostModel\findOneById($connexion, $id);
+
+    global $content, $title;
+    $title = $post['title'];
+    ob_start();
+    include "../app/views/posts/show.php";
     $content = ob_get_clean();
 }
